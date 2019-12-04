@@ -4,7 +4,15 @@ import style from "./style.module.css"
 
 export default function Gallery(props) {
   const [image, setImage] = useState()
-  const { primaryimageurl: imageUrl } = image || {}
+  const {
+    primaryimageurl: imageUrl,
+    creditline,
+    culture,
+    copyright,
+    dated,
+    technique,
+    title
+  } = image || {}
   const { weather } = props || {}
 
   useEffect(() => {
@@ -26,7 +34,17 @@ export default function Gallery(props) {
 
   return (
     <div className={style.imageContainer}>
-      <img src={imageUrl} />
+      <img src={imageUrl} alt={title} />
+      <div className={style.detailsOverlay}>
+        <div className={style.textContainer}>
+          <p>
+            {title}, {dated}
+          </p>
+          <p>{technique}</p>
+          <p>{culture}</p>
+          <p>{creditline}</p>
+        </div>
+      </div>
     </div>
   )
 }

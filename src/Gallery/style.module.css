@@ -1,8 +1,44 @@
 .imageContainer {
-  width: 50%;
+  height: 50vh;
+  position: relative;
 }
 
 .imageContainer img {
   max-width: 100%;
   max-height: 100%;
+}
+
+.detailsOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s linear;
+}
+
+.imageContainer:hover .detailsOverlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  visibility: visible;
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.textContainer {
+  padding: 0 10px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .imageContainer {
+    width: 50%;
+    height: auto;
+    margin: 30px;
+  }
 }

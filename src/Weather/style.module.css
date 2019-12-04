@@ -3,6 +3,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 50%;
-  height: 100vh;
+  height: 50vh;
+}
+
+@media (min-width: 768px) {
+  .weatherContainer {
+    width: 50%;
+    height: auto;
+    max-height: 80vh;
+  }
 }
