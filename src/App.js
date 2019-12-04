@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import Container from './Container'
 import './App.css';
 
+// const initialLocationState = {
+//   latitude: null,
+//   longitude: null
+// };
+
 function App() {
+  const [location, setLocation] = useState();
+
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(handlePosition)
+  }, []) //TODO: call useEffect when there has been a change in location.
+
+  const handlePosition = e => {
+    setLocation({
+      latitude: e.coords.latitude,
+      longitude: e.coords.longitude,
+    });
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Container location={location} />
+  )
 }
 
 export default App;
