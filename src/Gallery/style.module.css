@@ -31,7 +31,7 @@
 }
 
 .textContainer {
-  padding: 0 10px;
+  padding: 0 20px;
   text-align: center;
 }
 
@@ -50,7 +50,5 @@
   .imageContainer {
     width: 50%;
     height: auto;
-    max-height: 100vh;
-    margin: 30px 0;
   }
 }
