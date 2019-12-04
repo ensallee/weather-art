@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import API_KEYS from "../.env.js"
+import refreshIcon from "./media/refresh_icon.svg"
 import style from "./style.module.css"
 
 export default function Gallery(props) {
@@ -16,12 +17,16 @@ export default function Gallery(props) {
   const { weather } = props || {}
 
   useEffect(() => {
+    fetchArtwork()
+  }, [weather])
+
+  const fetchArtwork = () => {
     fetch(
       `https://api.harvardartmuseums.org/object?q=keyword=${weather}&size=20&apikey=${API_KEYS.harvardMuseums}`
     )
       .then(resp => resp.json())
       .then(data => handleImageData(data.records))
-  }, [weather])
+  }
 
   const handleImageData = records => {
     const filteredRecords = records.filter(record => record.primaryimageurl)
@@ -43,6 +48,9 @@ export default function Gallery(props) {
           <p>{technique}</p>
           <p>{culture}</p>
           <p>{creditline}</p>
+        </div>
+        <div className={style.refreshIconContainer} onClick={fetchArtwork}>
+          <img src={refreshIcon} alt="refresh" />
         </div>
       </div>
     </div>
