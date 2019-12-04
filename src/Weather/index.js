@@ -6,8 +6,12 @@ export default function Weather(props) {
 
   return (
     <div className={style.weatherContainer}>
-      <h1>{city}</h1>
-      <h3>{weather}</h3>
+      <div className={style.weatherText}>
+        <h2>{city}</h2>
+        <h4>
+          <i>{weather}</i>
+        </h4>
+      </div>
     </div>
   )
 }

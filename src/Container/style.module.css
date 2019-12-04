@@ -1,9 +1,11 @@
 .container {
+  font-family: "Open Sans", sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   max-width: 1300px;
+  margin: 0 30px;
   height: 100vh;
 }
 
