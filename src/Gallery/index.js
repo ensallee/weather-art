@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import API_KEYS from "../.env.js";
 import style from "./style.module.css";
 
 export default function Gallery(props) {
@@ -9,7 +10,7 @@ export default function Gallery(props) {
     const { weather } = props || {};
 
     fetch(
-      `https://api.harvardartmuseums.org/object?q=keyword=${weather}&size=20&apikey=${API_KEY}`
+      `https://api.harvardartmuseums.org/object?q=keyword=${weather}&size=20&apikey=${API_KEYS.harvardMuseums}`
     )
       .then(resp => resp.json())
       .then(data => handleImageData(data.records));
@@ -24,32 +25,9 @@ export default function Gallery(props) {
     setImage(randomImage);
   };
 
-  //   useEffect(() => {
-  //     const { weather } = props || {};
-  //     console.log("weather", weather);
-
-  //     weather &&
-  //       fetch(
-  //         `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${weather}` //this is no good b/c the keywords aren't good enough in the api.
-  //       )
-  //         .then(resp => resp.json())
-  //         .then(data => {
-  //           const randomImage =
-  //             data.objectIDs[Math.floor(Math.random() * data.objectIDs.length)];
-
-  //           return fetch(
-  //             `https://collectionapi.metmuseum.org/public/collection/v1/objects/${randomImage}`
-  //           )
-  //             .then(resp => resp.json())
-  //             .then(data => setImage(data));
-  //         });
-
-  //     //   .then(data => console.log("data", data));
-  //   });
-
   return (
     <div className={style.imageContainer}>
-      <img src={imageUrl}></img>
+      <img src={imageUrl} />
     </div>
   );
 }

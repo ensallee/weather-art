@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Weather from "../Weather";
 import Gallery from "../Gallery";
+import API_KEYS from "../.env.js";
 import style from "./style.module.css";
 
 export default function Container(props) {
@@ -15,7 +16,7 @@ export default function Container(props) {
 
     hasCoordinates &&
       fetch(
-        `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`
+        `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEYS.openWeather}`
       )
         .then(resp => resp.json())
         .then(data => {
@@ -23,6 +24,8 @@ export default function Container(props) {
           setCity(data.name);
         });
   }); // TODO: why doesn't this require a dependency array?
+
+  console.log("API_KEYS", API_KEYS);
 
   return (
     <div className={style.container}>
