@@ -32,11 +32,8 @@ export default function Container(props) {
   };
 
   const toggleModal = () => {
-    console.log("here");
     setModalOpen(!modalOpen);
   };
-
-  console.log("modalOpen", modalOpen);
 
   return (
     <div className={style.mainContainer}>
