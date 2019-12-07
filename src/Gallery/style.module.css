@@ -28,7 +28,7 @@
   transition: visibility 0s, opacity 0.3s linear;
 }
 
-.mainContainer:hover .detailsOverlay {
+.imageContainer:hover .detailsOverlay {
   display: flex;
   flex-direction: column;
   justify-content: center;

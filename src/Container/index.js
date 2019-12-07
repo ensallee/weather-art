@@ -38,14 +38,22 @@ export default function Container(props) {
   return (
     <div className={style.mainContainer}>
       <div className={style.innerContainer}>
-        {weather && (
+        {weather ? (
           <Fragment>
             <Weather weather={weather} city={city} toggleModal={toggleModal} />
             <Gallery weather={weather} />
           </Fragment>
+        ) : (
+          <h1>Loading...</h1>
         )}
       </div>
-      {modalOpen && <MapModal setLocation={setLocation} />}
+      {modalOpen && (
+        <MapModal
+          location={location}
+          setLocation={setLocation}
+          toggleModal={toggleModal}
+        />
+      )}
     </div>
   );
 }

@@ -11,6 +11,17 @@
 }
 
 .mapContainer {
-  width: 50%;
-  height: 50%;
+  width: 75%;
+  height: 75%;
+}
+
+.closeIconContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
 }

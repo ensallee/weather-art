@@ -11,8 +11,10 @@ export default function Weather(props) {
         <h4>
           <i>{weather}</i>
         </h4>
+        <button onClick={toggleModal} className={style.button}>
+          Change Location
+        </button>
       </div>
-      <button onClick={toggleModal}>Change Location</button>
     </div>
   );
 }
