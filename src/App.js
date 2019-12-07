@@ -16,7 +16,14 @@ function App() {
     });
   };
 
-  return <Container location={location} />;
+  // const changeLocation = location => {
+  //   setLocation({
+  //     latitude: location.latitude,
+  //     longitude: location.longitude
+  //   });
+  // };
+
+  return <Container location={location} setLocation={setLocation} />;
 }
 
 export default App;

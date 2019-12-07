@@ -1,8 +1,8 @@
-import React from "react"
-import style from "./style.module.css"
+import React from "react";
+import style from "./style.module.css";
 
 export default function Weather(props) {
-  const { weather, city } = props || {}
+  const { weather, city, toggleModal } = props || {};
 
   return (
     <div className={style.weatherContainer}>
@@ -12,6 +12,7 @@ export default function Weather(props) {
           <i>{weather}</i>
         </h4>
       </div>
+      <button onClick={toggleModal}>Change Location</button>
     </div>
-  )
+  );
 }
