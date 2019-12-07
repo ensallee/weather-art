@@ -16,7 +16,7 @@ function App() {
     });
   };
 
-  return <Container location={location} />;
+  return <Container location={location} setLocation={setLocation} />;
 }
 
 export default App;
