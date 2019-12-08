@@ -7,7 +7,6 @@ import style from "./style.module.css";
 
 export default function Container(props) {
   const [weather, setWeather] = useState();
-  const [city, setCity] = useState();
   const [modalOpen, setModalOpen] = useState(false);
 
   const { location, setLocation } = props || {};
@@ -20,14 +19,18 @@ export default function Container(props) {
     const { latitude, longitude } = location || {};
     const hasCoordinates = !!latitude && !!longitude;
 
+    const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+    const targetUrl = `https://api.darksky.net/forecast/${API_KEYS.darkSky}/${latitude},${longitude}`;
+
     hasCoordinates &&
-      fetch(
-        `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEYS.openWeather}`
-      )
+      fetch(proxyUrl + targetUrl)
         .then(resp => resp.json())
         .then(data => {
-          setWeather(data.weather[0].description);
-          setCity(data.name);
+          setWeather({
+            currentSummary: data.currently.summary,
+            minuteSummary: data.minutely && data.minutely.summary,
+            temperature: data.currently.apparentTemperature
+          });
         });
   };
 
@@ -40,7 +43,11 @@ export default function Container(props) {
       <div className={style.innerContainer}>
         {weather ? (
           <Fragment>
-            <Weather weather={weather} city={city} toggleModal={toggleModal} />
+            <Weather
+              weather={weather}
+              location={location}
+              toggleModal={toggleModal}
+            />
             <Gallery weather={weather} />
           </Fragment>
         ) : (

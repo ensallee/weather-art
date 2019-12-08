@@ -6,7 +6,17 @@ function App() {
   const [location, setLocation] = useState();
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(handlePosition);
+    // const options = {
+    //   enableHighAccuracy: true,
+    //   timeout: 5000,
+    //   maximumAge: 0
+    // };
+
+    navigator.geolocation.getCurrentPosition(
+      handlePosition
+      // handleError,
+      // options
+    );
   }, []); //TODO: call useEffect when there has been a change in location.
 
   const handlePosition = e => {
@@ -14,6 +24,10 @@ function App() {
       latitude: e.coords.latitude,
       longitude: e.coords.longitude
     });
+  };
+
+  const handleError = e => {
+    console.log("e", e);
   };
 
   return <Container location={location} setLocation={setLocation} />;

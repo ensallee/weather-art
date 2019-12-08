@@ -19,7 +19,7 @@ export default function MapModal(props) {
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11",
       center: [longitude, latitude],
-      zoom: 1
+      zoom: 3
     });
     map.on("click", e => {
       setLocation({
