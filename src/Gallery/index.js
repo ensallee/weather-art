@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react"
-import API_KEYS from "../.env.js"
-import refreshIcon from "./media/refresh_icon.svg"
-import style from "./style.module.css"
+import React, { useEffect, useState } from "react";
+import API_KEYS from "../.env.js";
+import refreshIcon from "./media/refresh_icon.svg";
+import style from "./style.module.css";
 
 export default function Gallery(props) {
-  const [image, setImage] = useState()
+  const [image, setImage] = useState();
   const {
     primaryimageurl: imageUrl,
     creditline,
@@ -13,29 +13,30 @@ export default function Gallery(props) {
     dated,
     technique,
     title
-  } = image || {}
-  const { weather } = props || {}
+  } = image || {};
+  const { weather } = props || {};
 
   useEffect(() => {
-    fetchArtwork()
-  }, [weather])
+    fetchArtwork();
+  }, [weather]);
 
   const fetchArtwork = () => {
+    const { currentSummary } = weather || {};
     fetch(
-      `https://api.harvardartmuseums.org/object?q=keyword=${weather}&size=20&apikey=${API_KEYS.harvardMuseums}`
+      `https://api.harvardartmuseums.org/object?q=keyword=${currentSummary}&size=20&apikey=${API_KEYS.harvardMuseums}`
     )
       .then(resp => resp.json())
-      .then(data => handleImageData(data.records))
-  }
+      .then(data => handleImageData(data.records));
+  };
 
   const handleImageData = records => {
-    const filteredRecords = records.filter(record => record.primaryimageurl)
+    const filteredRecords = records.filter(record => record.primaryimageurl);
 
     const randomImage =
-      filteredRecords[Math.floor(Math.random() * filteredRecords.length)]
+      filteredRecords[Math.floor(Math.random() * filteredRecords.length)];
 
-    setImage(randomImage)
-  }
+    setImage(randomImage);
+  };
 
   return (
     <div className={style.mainContainer}>
@@ -57,5 +58,5 @@ export default function Gallery(props) {
       </div>
       <p className={style.copyright}>{copyright}</p>
     </div>
-  )
+  );
 }
