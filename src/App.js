@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import Container from "./Container";
 import "./App.css";
 
+// const defaultLocation = {
+//   longitude: -73.9647076,
+//   latitude: 40.690798
+// };
+
 function App() {
   const [location, setLocation] = useState();
 

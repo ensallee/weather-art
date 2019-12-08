@@ -3,28 +3,28 @@ import API_KEYS from "../.env.js";
 import style from "./style.module.css";
 
 export default function Weather(props) {
-  const [locationString, setLocationString] = useState();
-  const { weather, toggleModal } = props || {};
+  // const [locationString, setLocationString] = useState();
+  const { weather, toggleModal, locationString } = props || {};
   const { currentSummary, minuteSummary } = weather || {};
 
-  useEffect(() => {
-    const { location } = props;
-    const { longitude, latitude } = location || {};
-    fetch(
-      `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${API_KEYS.mapBox}`
-    )
-      .then(resp => resp.json())
-      .then(data => {
-        findMostPreciseLocation(data.features);
-      });
-  }, [weather]);
+  // useEffect(() => {
+  //   const { location } = props;
+  //   const { longitude, latitude } = location || {};
+  //   fetch(
+  //     `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${API_KEYS.mapBox}`
+  //   )
+  //     .then(resp => resp.json())
+  //     .then(data => {
+  //       findMostPreciseLocation(data.features);
+  //     });
+  // }, [weather]);
 
-  const findMostPreciseLocation = features => {
-    const trimmedFeatures = features.slice(0, 3).reverse();
-    const locationString = trimmedFeatures.find(feature => feature.place_name)
-      .place_name;
-    setLocationString(locationString);
-  };
+  // const findMostPreciseLocation = features => {
+  //   const trimmedFeatures = features.slice(0, 3).reverse();
+  //   const locationString = trimmedFeatures.find(feature => feature.place_name)
+  //     .place_name;
+  //   setLocationString(locationString);
+  // };
 
   return (
     <div className={style.weatherContainer}>

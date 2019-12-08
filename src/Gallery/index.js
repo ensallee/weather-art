@@ -14,11 +14,11 @@ export default function Gallery(props) {
     technique,
     title
   } = image || {};
-  const { weather } = props || {};
+  const { weather, modalOpen } = props || {};
 
   useEffect(() => {
-    fetchArtwork();
-  }, [weather]);
+    !modalOpen && fetchArtwork();
+  }, [weather, modalOpen]);
 
   const fetchArtwork = () => {
     const { currentSummary } = weather || {};

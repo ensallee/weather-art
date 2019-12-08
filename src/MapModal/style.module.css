@@ -10,9 +10,14 @@
   align-items: center;
 }
 
-.mapContainer {
+.innerContainer {
   width: 75%;
   height: 75%;
+  display: flex;
+}
+
+.mapContainer {
+  width: 75%;
 }
 
 .closeIconContainer {
@@ -24,4 +29,20 @@
   padding: 10px;
   cursor: pointer;
   z-index: 10;
+}
+
+.textContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: white;
+  width: 25%;
+  position: relative;
+  padding: 10px;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
 }
