@@ -7,7 +7,7 @@ import style from "./style.module.css";
 export default function MapModal(props) {
   const mapContainer = useRef(null);
   const [initialLocation, setInitialLocation] = useState();
-  const [mapLocation, setMapLocation] = useState(initialLocation);
+  const [mapLocation, setMapLocation] = useState();
   const {
     location,
     setLocation,
@@ -22,13 +22,14 @@ export default function MapModal(props) {
 
   useEffect(() => {
     setInitialLocation(props.location);
-    setMapLocation(props.location);
     setupMap();
   }, []);
 
   useEffect(() => {
-    reverseGeocode(mapLocation);
-    getWeather(mapLocation);
+    if (mapLocation) {
+      reverseGeocode(mapLocation);
+      getWeather(mapLocation);
+    }
   }, [mapLocation]);
 
   const setupMap = () => {
@@ -47,6 +48,7 @@ export default function MapModal(props) {
     });
   };
 
+  //TODO: This isn't working quite right.
   const resetLocation = e => {
     e.stopPropagation();
     setLocation(initialLocation);

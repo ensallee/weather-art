@@ -3,6 +3,11 @@ import API_KEYS from "../.env.js";
 import refreshIcon from "./media/refresh_icon.svg";
 import style from "./style.module.css";
 
+const defaultTerms = {
+  clear: "sun",
+  flurries: "snow"
+};
+
 export default function Gallery(props) {
   const [image, setImage] = useState();
   const {
@@ -22,11 +27,33 @@ export default function Gallery(props) {
 
   const fetchArtwork = () => {
     const { currentSummary } = weather || {};
+
+    const searchTerm = getSearchTerm(currentSummary);
+
     fetch(
-      `https://api.harvardartmuseums.org/object?q=keyword=${currentSummary}&size=20&apikey=${API_KEYS.harvardMuseums}`
+      `https://api.harvardartmuseums.org/object?q=keyword=${searchTerm}&size=20&apikey=${API_KEYS.harvardMuseums}`
     )
       .then(resp => resp.json())
       .then(data => handleImageData(data.records));
+  };
+
+  //Not all weather summaries return acceptable art results. This method coerces certain summaries into useful search terms.
+  const getSearchTerm = summary => {
+    const summaryArray = summary.split(" ").map(word => word.toLowerCase());
+
+    const hardCodedTerm = Object.keys(defaultTerms)
+      .filter(term => {
+        const filteredSummaryArray = summaryArray.filter(word => {
+          if (word === term) return term;
+        });
+
+        if (filteredSummaryArray.includes(term)) return term;
+      })
+      .map(filteredTerm => defaultTerms[filteredTerm]);
+
+    if (hardCodedTerm.length !== 0) return hardCodedTerm;
+
+    return summary;
   };
 
   const handleImageData = records => {
