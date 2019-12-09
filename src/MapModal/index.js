@@ -1,77 +1,87 @@
 import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
+import { reverseGeocode } from "../utils.js";
 import API_KEYS from "../.env.js";
 import closeIcon from "./media/close_icon.svg";
 import style from "./style.module.css";
 
 export default function MapModal(props) {
   const mapContainer = useRef(null);
-  const [initialLocation, setInitialLocation] = useState();
   const [mapLocation, setMapLocation] = useState();
+  const [mapLocationString, setMapLocationString] = useState();
+  const [mapWeather, setMapWeather] = useState();
   const {
     location,
     setLocation,
     toggleModal,
-    locationString,
-    reverseGeocode,
     getWeather,
-    weather
+    weather: initialWeather
   } = props;
-  const { longitude, latitude } = location || {};
-  const { currentSummary, minuteSummary } = weather || {};
+  const { longitude: initialLongitude, latitude: initialLatitude } =
+    location || {};
+  const { currentSummary, minuteSummary } = mapWeather || {};
 
   useEffect(() => {
-    setInitialLocation(props.location);
+    setMapWeather(initialWeather);
+    reverseGeocode(
+      {
+        longitude: initialLongitude,
+        latitude: initialLatitude
+      },
+      setMapLocationString
+    );
     setupMap();
   }, []);
 
-  useEffect(() => {
-    if (mapLocation) {
-      reverseGeocode(mapLocation);
-      getWeather(mapLocation);
-    }
-  }, [mapLocation]);
+  const handleLocationChange = location => {
+    getWeather(location, setMapWeather);
+    setMapLocation(location);
+    reverseGeocode(
+      {
+        longitude: location.longitude,
+        latitude: location.latitude
+      },
+      setMapLocationString
+    );
+  };
 
   const setupMap = () => {
     mapboxgl.accessToken = API_KEYS.mapBox;
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11",
-      center: [longitude, latitude],
+      center: [initialLongitude, initialLatitude],
       zoom: 3
     });
     map.on("click", e => {
-      setMapLocation({
+      handleLocationChange({
         longitude: e.lngLat.lng,
         latitude: e.lngLat.lat
       });
     });
   };
 
-  //TODO: This isn't working quite right.
-  const resetLocation = e => {
-    e.stopPropagation();
-    setLocation(initialLocation);
-    getWeather(initialLocation);
+  const getArtwork = () => {
+    setLocation(mapLocation);
     toggleModal();
   };
 
   return (
     <div className={style.modalContainer} onClick={toggleModal}>
-      <div className={style.innerContainer}>
+      <div className={style.innerContainer} onClick={e => e.stopPropagation()}>
         <div
           ref={mapContainer}
           className={style.mapContainer}
           onClick={e => e.stopPropagation()} //TODO: is this slowing the map down?
         />
         <div className={style.textContainer}>
-          <h5>{locationString}</h5>
+          <h5>{mapLocationString}</h5>
           <p>{minuteSummary || currentSummary}</p>
           <div className={style.buttonContainer}>
-            <button onClick={toggleModal}>Get Artwork</button>
-            <button onClick={e => resetLocation(e)}>Cancel</button>
+            <button onClick={getArtwork}>Get Artwork</button>
+            <button onClick={toggleModal}>Cancel</button>
           </div>
-          <div className={style.closeIconContainer}>
+          <div className={style.closeIconContainer} onClick={toggleModal}>
             <img src={closeIcon} alt="close" />
           </div>
         </div>
