@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import Weather from "../Weather";
 import Gallery from "../Gallery";
 import MapModal from "../MapModal";
-import { reverseGeocode, findMostPreciseLocation } from "../utils.js";
 import API_KEYS from "../.env.js";
 import style from "./style.module.css";
 
@@ -21,25 +20,7 @@ export default function Container(props) {
     reverseGeocode(location, setLocationString);
   }, [weather]);
 
-  // const reverseGeocode = location => {
-  //   const { longitude, latitude } = location || {};
-  //   fetch(
-  //     `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${API_KEYS.mapBox}`
-  //   )
-  //     .then(resp => resp.json())
-  //     .then(data => {
-  //       findMostPreciseLocation(data.features, setLocationString);
-  //     });
-  // };
-
-  // const findMostPreciseLocation = features => {
-  //   //this needs to take a callback so it's not setting the head location string every time--either set the head location string or set teh location inside the modal. consider moving into utils
-  //   const trimmedFeatures = features.slice(0, 3).reverse();
-  //   const locationString = trimmedFeatures.find(feature => feature.place_name)
-  //     .place_name;
-  //   setLocationString(locationString);
-  // };
-
+  // these three methods accept callbacks so that state on Container and on MapModal can be managed independently of one another.
   const getWeather = (location, callback) => {
     const { longitude, latitude } = location || {};
     const hasCoordinates = !!latitude && !!longitude;
@@ -56,12 +37,25 @@ export default function Container(props) {
             minuteSummary: data.minutely && data.minutely.summary,
             temperature: data.currently.apparentTemperature
           });
-          // setWeather({
-          //   currentSummary: data.currently.summary,
-          //   minuteSummary: data.minutely && data.minutely.summary,
-          //   temperature: data.currently.apparentTemperature
-          // });
         });
+  };
+
+  const reverseGeocode = (location, callback) => {
+    const { longitude, latitude } = location || {};
+    fetch(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${API_KEYS.mapBox}`
+    )
+      .then(resp => resp.json())
+      .then(data => {
+        findMostPreciseLocation(data.features, callback);
+      });
+  };
+
+  const findMostPreciseLocation = (features, callback) => {
+    const trimmedFeatures = features.slice(0, 3).reverse();
+    const locationString = trimmedFeatures.find(feature => feature.place_name)
+      .place_name;
+    callback(locationString);
   };
 
   const toggleModal = () => {
@@ -93,7 +87,7 @@ export default function Container(props) {
           setLocation={setLocation}
           toggleModal={toggleModal}
           getWeather={getWeather}
-          // reverseGeocode={reverseGeocode}
+          reverseGeocode={reverseGeocode}
         />
       )}
     </div>

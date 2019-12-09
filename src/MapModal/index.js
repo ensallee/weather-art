@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
-import { reverseGeocode } from "../utils.js";
 import API_KEYS from "../.env.js";
 import closeIcon from "./media/close_icon.svg";
 import style from "./style.module.css";
@@ -15,6 +14,7 @@ export default function MapModal(props) {
     setLocation,
     toggleModal,
     getWeather,
+    reverseGeocode,
     weather: initialWeather
   } = props;
   const { longitude: initialLongitude, latitude: initialLatitude } =
@@ -33,18 +33,6 @@ export default function MapModal(props) {
     setupMap();
   }, []);
 
-  const handleLocationChange = location => {
-    getWeather(location, setMapWeather);
-    setMapLocation(location);
-    reverseGeocode(
-      {
-        longitude: location.longitude,
-        latitude: location.latitude
-      },
-      setMapLocationString
-    );
-  };
-
   const setupMap = () => {
     mapboxgl.accessToken = API_KEYS.mapBox;
     const map = new mapboxgl.Map({
@@ -59,6 +47,18 @@ export default function MapModal(props) {
         latitude: e.lngLat.lat
       });
     });
+  };
+
+  const handleLocationChange = location => {
+    getWeather(location, setMapWeather);
+    setMapLocation(location);
+    reverseGeocode(
+      {
+        longitude: location.longitude,
+        latitude: location.latitude
+      },
+      setMapLocationString
+    );
   };
 
   const getArtwork = () => {
