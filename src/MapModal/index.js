@@ -4,6 +4,8 @@ import API_KEYS from "../.env.js";
 import closeIcon from "./media/close_icon.svg";
 import style from "./style.module.css";
 
+let map = undefined;
+
 export default function MapModal(props) {
   const mapContainer = useRef(null);
   const [mapLocation, setMapLocation] = useState();
@@ -11,7 +13,6 @@ export default function MapModal(props) {
   const [isSearching, setIsSearching] = useState(false);
   const [searchTerm, setSearchTerm] = useState();
   const [mapWeather, setMapWeather] = useState();
-  const [map, setMap] = useState();
 
   const {
     location,
@@ -46,7 +47,7 @@ export default function MapModal(props) {
 
   const setupMap = () => {
     mapboxgl.accessToken = API_KEYS.mapBox;
-    const map = new mapboxgl.Map({
+    map = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11",
       center: [initialLongitude, initialLatitude],
@@ -58,14 +59,12 @@ export default function MapModal(props) {
         latitude: e.lngLat.lat
       });
     });
-
-    setMap(map); //TODO: is there a better way to give us global access to the map? The code involved throughout is gross.
   };
 
   const handleLocationChange = location => {
     getWeather(location, setMapWeather);
     setMapLocation(location);
-    map && map.setCenter([location.longitude, location.latitude]); //TODO: this is some of said gross code,
+    map.setCenter([location.longitude, location.latitude]);
     reverseGeocode(
       {
         longitude: location.longitude,
