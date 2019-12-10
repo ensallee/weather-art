@@ -7,7 +7,9 @@ import style from "./style.module.css";
 export default function MapModal(props) {
   const mapContainer = useRef(null);
   const [mapLocation, setMapLocation] = useState();
-  const [mapLocationString, setMapLocationString] = useState();
+  const [mapLocationString, setMapLocationString] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchTerm, setSearchTerm] = useState();
   const [mapWeather, setMapWeather] = useState();
   const {
     location,
@@ -38,7 +40,7 @@ export default function MapModal(props) {
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11",
-      center: [initialLongitude, initialLatitude],
+      center: [initialLongitude, initialLatitude], //TODO: Is there a way to get this to change as the selected location changes?
       zoom: 3
     });
     map.on("click", e => {
@@ -66,17 +68,41 @@ export default function MapModal(props) {
     toggleModal();
   };
 
+  const handleInputChange = e => {
+    setIsSearching(true); //TODO: is there a better way to do this?
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    fetch(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchTerm}.json?access_token=${API_KEYS.mapBox}`
+    )
+      .then(resp => resp.json())
+      .then(data => {
+        const coordinates =
+          data && data.features && data.features[0] && data.features[0].center;
+        handleLocationChange({
+          longitude: coordinates[0],
+          latitude: coordinates[1]
+        });
+        setIsSearching(false);
+      });
+  };
+
   return (
     <div className={style.modalContainer} onClick={toggleModal}>
       <div className={style.innerContainer} onClick={e => e.stopPropagation()}>
-        <div
-          ref={mapContainer}
-          className={style.mapContainer}
-          onClick={e => e.stopPropagation()} //TODO: is this slowing the map down?
-        />
+        <div ref={mapContainer} className={style.mapContainer} />
         <div className={style.textContainer}>
-          <h5>{mapLocationString}</h5>
-          <p>{minuteSummary || currentSummary}</p>
+          <div className={style.inputContainer}>
+            <input
+              type="text"
+              value={isSearching ? searchTerm : mapLocationString}
+              onChange={e => handleInputChange(e)}
+            />
+            <button onClick={handleSubmit}>Submit</button>
+          </div>
+          <p>{mapWeather}</p>
           <div className={style.buttonContainer}>
             <button onClick={getArtwork}>Get Artwork</button>
             <button onClick={toggleModal}>Cancel</button>
