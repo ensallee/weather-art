@@ -25,6 +25,14 @@ export default function MapModal(props) {
     location || {};
 
   useEffect(() => {
+    const listenForEnter = e => e.keyCode === 13 && handleSubmit();
+
+    document.addEventListener("keydown", listenForEnter);
+
+    return () => document.removeEventListener("keydown", listenForEnter);
+  });
+
+  useEffect(() => {
     setMapWeather(initialWeather);
     reverseGeocode(
       {
