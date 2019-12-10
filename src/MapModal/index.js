@@ -21,7 +21,6 @@ export default function MapModal(props) {
   } = props;
   const { longitude: initialLongitude, latitude: initialLatitude } =
     location || {};
-  const { currentSummary, minuteSummary } = mapWeather || {};
 
   useEffect(() => {
     setMapWeather(initialWeather);
