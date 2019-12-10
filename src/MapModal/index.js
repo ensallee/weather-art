@@ -11,6 +11,8 @@ export default function MapModal(props) {
   const [isSearching, setIsSearching] = useState(false);
   const [searchTerm, setSearchTerm] = useState();
   const [mapWeather, setMapWeather] = useState();
+  const [map, setMap] = useState();
+
   const {
     location,
     setLocation,
@@ -39,7 +41,7 @@ export default function MapModal(props) {
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11",
-      center: [initialLongitude, initialLatitude], //TODO: Is there a way to get this to change as the selected location changes?
+      center: [initialLongitude, initialLatitude],
       zoom: 3
     });
     map.on("click", e => {
@@ -48,11 +50,14 @@ export default function MapModal(props) {
         latitude: e.lngLat.lat
       });
     });
+
+    setMap(map); //TODO: is there a better way to give us global access to the map? The code involved throughout is gross.
   };
 
   const handleLocationChange = location => {
     getWeather(location, setMapWeather);
     setMapLocation(location);
+    map && map.setCenter([location.longitude, location.latitude]); //TODO: this is some of said gross code,
     reverseGeocode(
       {
         longitude: location.longitude,

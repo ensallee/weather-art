@@ -2,8 +2,13 @@ import React, { useState, useEffect } from "react";
 import Container from "./Container";
 import "./App.css";
 
+const initialLocation = {
+  latitude: 40.68,
+  longitude: -73.97
+};
+
 function App() {
-  const [location, setLocation] = useState();
+  const [location, setLocation] = useState(initialLocation);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(handlePosition);
