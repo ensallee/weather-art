@@ -25,18 +25,19 @@ export default function Container(props) {
     const { longitude, latitude } = location || {};
     const hasCoordinates = !!latitude && !!longitude;
 
-    const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-    const targetUrl = `https://api.darksky.net/forecast/${API_KEYS.darkSky}/${latitude},${longitude}`;
+    // const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+    // const targetUrl = `https://api.darksky.net/forecast/${API_KEYS.darkSky}/${latitude},${longitude}`;
 
     hasCoordinates &&
-      fetch(proxyUrl + targetUrl)
+      fetch(
+        `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEYS.openWeather}`
+      )
         .then(resp => resp.json())
         .then(data => {
-          callback({
-            currentSummary: data.currently.summary,
-            minuteSummary: data.minutely && data.minutely.summary,
-            temperature: data.currently.apparentTemperature
-          });
+          data &&
+            data.weather &&
+            data.weather[0] &&
+            callback(data.weather[0].description);
         });
   };
 

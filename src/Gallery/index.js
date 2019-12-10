@@ -5,7 +5,8 @@ import style from "./style.module.css";
 
 const defaultTerms = {
   clear: "sun",
-  flurries: "snow"
+  flurries: "snow",
+  drizzle: "rain"
 };
 
 export default function Gallery(props) {
@@ -26,9 +27,7 @@ export default function Gallery(props) {
   }, [weather, modalOpen]);
 
   const fetchArtwork = () => {
-    const { currentSummary } = weather || {};
-
-    const searchTerm = getSearchTerm(currentSummary);
+    const searchTerm = getSearchTerm(weather);
 
     fetch(
       `https://api.harvardartmuseums.org/object?q=keyword=${searchTerm}&size=20&apikey=${API_KEYS.harvardMuseums}`
