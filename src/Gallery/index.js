@@ -68,7 +68,7 @@ export default function Gallery(props) {
     <div className={style.galleryContainer}>
       <div className={style.imageContainer}>
         <img src={imageUrl} alt={title} />
-        <div className={style.detailsOverlay}>
+        <div className={style.details}>
           <div className={style.textContainer}>
             <p>
               {title}, {dated}
