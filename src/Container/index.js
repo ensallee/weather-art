@@ -25,9 +25,6 @@ export default function Container(props) {
     const { longitude, latitude } = location || {};
     const hasCoordinates = !!latitude && !!longitude;
 
-    // const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-    // const targetUrl = `https://api.darksky.net/forecast/${API_KEYS.darkSky}/${latitude},${longitude}`;
-
     hasCoordinates &&
       fetch(
         `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEYS.openWeather}`
@@ -74,7 +71,7 @@ export default function Container(props) {
               locationString={locationString}
               toggleModal={toggleModal}
             />
-            <Gallery weather={weather} modalOpen={modalOpen} />
+            <Gallery weather={weather} />
           </Fragment>
         ) : (
           <h1>Loading...</h1>

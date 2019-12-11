@@ -20,11 +20,11 @@ export default function Gallery(props) {
     technique,
     title
   } = image || {};
-  const { weather, modalOpen } = props || {};
+  const { weather } = props || {};
 
   useEffect(() => {
-    !modalOpen && fetchArtwork();
-  }, [weather, modalOpen]);
+    fetchArtwork();
+  }, [weather]);
 
   const fetchArtwork = () => {
     const searchTerm = getSearchTerm(weather);
