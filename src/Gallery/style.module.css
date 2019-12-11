@@ -1,5 +1,5 @@
 .mainContainer {
-  height: 50vh;
+  height: 50%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -9,11 +9,12 @@
 
 .mainContainer img {
   max-width: 100%;
-  max-height: 100vh;
+  max-height: 100%;
 }
 
 .imageContainer {
   position: relative;
+  max-height: 100%;
 }
 
 .detailsOverlay {
@@ -64,6 +65,6 @@
 @media (min-width: 768px) {
   .mainContainer {
     width: 50%;
-    height: 100vh;
+    height: 100%;
   }
 }

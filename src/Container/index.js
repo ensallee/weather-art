@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
+import Nav from "../Nav";
 import Weather from "../Weather";
 import Gallery from "../Gallery";
 import MapModal from "../MapModal";
@@ -61,33 +62,36 @@ export default function Container(props) {
   };
 
   return (
-    <div className={style.mainContainer}>
-      <div className={style.innerContainer}>
-        {weather ? (
-          <Fragment>
-            <Weather
-              weather={weather}
-              location={location}
-              locationString={locationString}
-              toggleModal={toggleModal}
-            />
-            <Gallery weather={weather} />
-          </Fragment>
-        ) : (
-          <h1>Loading...</h1>
+    <Fragment>
+      <Nav weather={weather} locationString={locationString} />
+      <div className={style.mainContainer}>
+        <div className={style.innerContainer}>
+          {weather ? (
+            <Fragment>
+              <Weather
+                weather={weather}
+                location={location}
+                locationString={locationString}
+                toggleModal={toggleModal}
+              />
+              <Gallery weather={weather} />
+            </Fragment>
+          ) : (
+            <h1>Loading...</h1>
+          )}
+        </div>
+        {modalOpen && (
+          <MapModal
+            weather={weather}
+            location={location}
+            locationString={locationString}
+            setLocation={setLocation}
+            toggleModal={toggleModal}
+            getWeather={getWeather}
+            reverseGeocode={reverseGeocode}
+          />
         )}
       </div>
-      {modalOpen && (
-        <MapModal
-          weather={weather}
-          location={location}
-          locationString={locationString}
-          setLocation={setLocation}
-          toggleModal={toggleModal}
-          getWeather={getWeather}
-          reverseGeocode={reverseGeocode}
-        />
-      )}
-    </div>
+    </Fragment>
   );
 }

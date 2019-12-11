@@ -1,6 +1,7 @@
 .mainContainer {
   width: 100vw;
-  height: 100vh;
+  margin-top: 55px;
+  height: calc(100vh - 55px);
 }
 
 .innerContainer {
@@ -11,7 +12,6 @@
   align-items: center;
   justify-content: center;
   max-width: 1300px;
-  margin: 0 30px;
   height: 100%;
   width: 100%;
 }
@@ -19,5 +19,6 @@
 @media (min-width: 768px) {
   .innerContainer {
     flex-direction: row;
+    margin: 0 30px;
   }
 }
