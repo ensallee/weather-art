@@ -62,6 +62,7 @@ export default function MapModal(props) {
   };
 
   const handleLocationChange = location => {
+    setIsSearching(false);
     getWeather(location, setMapWeather);
     setMapLocation(location);
     map.setCenter([location.longitude, location.latitude]);
@@ -96,7 +97,6 @@ export default function MapModal(props) {
           longitude: coordinates[0],
           latitude: coordinates[1]
         });
-        setIsSearching(false);
       });
   };
 
