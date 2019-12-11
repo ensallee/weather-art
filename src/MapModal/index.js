@@ -15,7 +15,7 @@ export default function MapModal(props) {
   const [mapWeather, setMapWeather] = useState();
 
   const {
-    location,
+    location: initialLocation,
     setLocation,
     toggleModal,
     getWeather,
@@ -23,7 +23,7 @@ export default function MapModal(props) {
     weather: initialWeather
   } = props;
   const { longitude: initialLongitude, latitude: initialLatitude } =
-    location || {};
+    initialLocation || {};
 
   useEffect(() => {
     const listenForEnter = e => e.keyCode === 13 && handleSubmit();
@@ -35,6 +35,7 @@ export default function MapModal(props) {
 
   useEffect(() => {
     setMapWeather(initialWeather);
+    setMapLocation(initialLocation);
     reverseGeocode(
       {
         longitude: initialLongitude,
@@ -61,15 +62,15 @@ export default function MapModal(props) {
     });
   };
 
-  const handleLocationChange = location => {
+  const handleLocationChange = newLocation => {
     setIsSearching(false);
-    getWeather(location, setMapWeather);
-    setMapLocation(location);
-    map.setCenter([location.longitude, location.latitude]);
+    getWeather(newLocation, setMapWeather);
+    setMapLocation(newLocation);
+    map.setCenter([newLocation.longitude, newLocation.latitude]);
     reverseGeocode(
       {
-        longitude: location.longitude,
-        latitude: location.latitude
+        longitude: newLocation.longitude,
+        latitude: newLocation.latitude
       },
       setMapLocationString
     );
