@@ -63,7 +63,11 @@ export default function Container(props) {
 
   return (
     <Fragment>
-      <Nav weather={weather} locationString={locationString} />
+      <Nav
+        weather={weather}
+        locationString={locationString}
+        toggleModal={toggleModal}
+      />
       <div className={style.mainContainer}>
         <div className={style.innerContainer}>
           {weather ? (
