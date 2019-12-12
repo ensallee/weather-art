@@ -66,8 +66,10 @@ export default function Gallery(props) {
 
   return (
     <div className={style.galleryContainer}>
-      <div className={style.imageContainer}>
-        <img src={imageUrl} alt={title} />
+      <div className={style.innerContainer}>
+        <div className={style.imageContainer}>
+          <img src={imageUrl} alt={title} />
+        </div>
         <div className={style.details}>
           <div className={style.textContainer}>
             <p>
@@ -81,8 +83,8 @@ export default function Gallery(props) {
             <img src={refreshIcon} alt="refresh" />
           </div>
         </div>
+        <p className={style.copyright}>{copyright}</p>
       </div>
-      <p className={style.copyright}>{copyright}</p>
     </div>
   );
 }
