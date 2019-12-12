@@ -8,7 +8,7 @@
 }
 
 .innerContainer {
-  height: 100%;
+  max-height: 100%;
 }
 
 .galleryContainer img {
@@ -65,15 +65,25 @@
   }
 
   .galleryContainer img {
+    width: 100%;
     max-width: 100%;
     max-height: 100%;
   }
 
   .innerContainer {
     position: relative;
+    max-width: 100%;
     max-height: 100%;
     display: flex;
     flex-direction: column;
+  }
+
+  .imageContainer {
+    height: auto;
+    width: fit-content;
+    max-height: 100%;
+    max-width: 100%;
+    display: block;
   }
 
   .details {
@@ -89,7 +99,6 @@
   }
 
   .innerContainer:hover .details {
-    border: 1px solid red;
     display: flex;
     flex-direction: column;
     justify-content: center;
