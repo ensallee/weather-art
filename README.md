@@ -1,6 +1,6 @@
 # WeatherVane
 
-A front-end React app that enables users to view works of art that correspond with their current location. Users can also change their location by either interacting with a MapBox map or entering a new location into a text field. My one rule for myself when building this project was that I could only use functional components with hooks.
+A front-end React app that enables users to view works of art that correspond with the weather in their current location. Users can also change their location by either interacting with a MapBox map or entering a new location into a text field. My one rule for myself when building this project was that I could only use functional components with hooks.
 
 
 ## Getting Started
