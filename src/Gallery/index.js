@@ -74,13 +74,15 @@ export default function Gallery(props) {
   };
 
   return (
-    <div className={style.mainContainer}>
+    <div className={style.galleryContainer}>
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div className={style.imageContainer}>
-          <img src={imageUrl} alt={title} />
-          <div className={style.detailsOverlay}>
+        <div className={style.innerContainer}>
+          <div className={style.imageContainer}>
+            <img src={imageUrl} alt={title} />
+          </div>
+          <div className={style.details}>
             <div className={style.textContainer}>
               <p>
                 {title}, {date}

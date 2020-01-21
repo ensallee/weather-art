@@ -1,40 +1,35 @@
 .weatherContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: auto;
-  width: 100%;
-}
-
-.weatherText {
-  width: 90%;
-  text-align: center;
-  border-radius: 4px;
-  box-shadow: 0px 4px 15px 6px #ccc;
-}
-
-.button {
-  cursor: pointer;
-  padding: 10px;
-  background-color: white;
-  border-color: black;
-  margin-bottom: 12px;
-}
-
-.button:hover {
-  background-color: black;
-  color: white;
+  display: none;
 }
 
 @media (min-width: 768px) {
   .weatherContainer {
     width: 50%;
     height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .weatherText {
     width: 75%;
     max-width: 500px;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0px 4px 15px 6px #ccc;
+  }
+
+  .button {
+    cursor: pointer;
+    padding: 10px;
+    background-color: white;
+    border-color: black;
+    margin-bottom: 12px;
+  }
+
+  .button:hover {
+    background-color: black;
+    color: white;
   }
 }
