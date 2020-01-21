@@ -26,6 +26,10 @@ export default function Gallery(props) {
     fetchArtwork();
   }, [weather]);
 
+  useEffect(() => {
+    image && setLoading(false);
+  }, [image]);
+
   const fetchArtwork = () => {
     setImage(null);
     setLoading(true);
@@ -47,7 +51,6 @@ export default function Gallery(props) {
       .then(resp => resp.json())
       .then(data => {
         setImage(data);
-        setLoading(false);
       });
   };
 
