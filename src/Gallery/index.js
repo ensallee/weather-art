@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
-import API_KEYS from "../.env.js";
 import refreshIcon from "./media/refresh_icon.svg";
 import style from "./style.module.css";
 
 const defaultTerms = {
   clear: "sun",
   flurries: "snow",
-  drizzle: "rain"
+  drizzle: "rain",
+  "clear sky": "sun",
+  "light snow": "snow"
 };
 
 export default function Gallery(props) {
   const [image, setImage] = useState();
+  const [loading, setLoading] = useState(false);
   const {
-    primaryimageurl: imageUrl,
-    creditline,
-    culture,
-    copyright,
-    dated,
-    technique,
-    title
+    primaryImageSmall: imageUrl,
+    title,
+    medium,
+    creditLine: credit,
+    objectDate: date
   } = image || {};
   const { weather } = props || {};
 
@@ -27,13 +27,28 @@ export default function Gallery(props) {
   }, [weather]);
 
   const fetchArtwork = () => {
+    setImage(null);
+    setLoading(true);
     const searchTerm = getSearchTerm(weather);
 
     fetch(
-      `https://api.harvardartmuseums.org/object?q=keyword=${searchTerm}&size=20&apikey=${API_KEYS.harvardMuseums}`
+      `https://collectionapi.metmuseum.org/public/collection/v1/search?q=${searchTerm}&medium=Paintings`
     )
       .then(resp => resp.json())
-      .then(data => handleImageData(data.records));
+      .then(data => handleImageSelection(data.objectIDs));
+  };
+
+  const handleImageSelection = imageIds => {
+    const randomImageId = imageIds[Math.floor(Math.random() * imageIds.length)];
+
+    fetch(
+      `https://collectionapi.metmuseum.org/public/collection/v1/objects/${randomImageId}`
+    )
+      .then(resp => resp.json())
+      .then(data => {
+        setImage(data);
+        setLoading(false);
+      });
   };
 
   //Not all weather summaries return acceptable art results. This method coerces certain summaries into useful search terms.
@@ -55,34 +70,27 @@ export default function Gallery(props) {
     return summary;
   };
 
-  const handleImageData = records => {
-    const filteredRecords = records.filter(record => record.primaryimageurl);
-
-    const randomImage =
-      filteredRecords[Math.floor(Math.random() * filteredRecords.length)];
-
-    setImage(randomImage);
-  };
-
   return (
     <div className={style.mainContainer}>
-      <div className={style.imageContainer}>
-        <img src={imageUrl} alt={title} />
-        <div className={style.detailsOverlay}>
-          <div className={style.textContainer}>
-            <p>
-              {title}, {dated}
-            </p>
-            <p>{technique}</p>
-            <p>{culture}</p>
-            <p>{creditline}</p>
-          </div>
-          <div className={style.refreshIconContainer} onClick={fetchArtwork}>
-            <img src={refreshIcon} alt="refresh" />
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <div className={style.imageContainer}>
+          <img src={imageUrl} alt={title} />
+          <div className={style.detailsOverlay}>
+            <div className={style.textContainer}>
+              <p>
+                {title}, {date}
+              </p>
+              <p>{medium}</p>
+              <p>{credit}</p>
+            </div>
+            <div className={style.refreshIconContainer} onClick={fetchArtwork}>
+              <img src={refreshIcon} alt="refresh" />
+            </div>
           </div>
         </div>
-      </div>
-      <p className={style.copyright}>{copyright}</p>
+      )}
     </div>
   );
 }
