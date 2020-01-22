@@ -76,7 +76,7 @@ export default function Gallery(props) {
   return (
     <div className={style.galleryContainer}>
       {loading ? (
-        <div>Loading...</div>
+        <div className={style.loader} />
       ) : (
         <div className={style.innerContainer}>
           <div className={style.imageContainer}>

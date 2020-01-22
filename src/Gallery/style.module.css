@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .innerContainer {
@@ -51,17 +52,28 @@
   max-height: 100%;
 }
 
-.copyright {
-  margin: 3px 0;
-  align-self: flex-end;
-  font-size: 12px;
+.loader {
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid #557aa6;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @media (min-width: 768px) {
   .galleryContainer {
     width: 50%;
     height: 100%;
-    justify-content: center;
   }
 
   .innerContainer {

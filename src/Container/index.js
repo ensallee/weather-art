@@ -81,7 +81,7 @@ export default function Container(props) {
               <Gallery weather={weather} />
             </Fragment>
           ) : (
-            <h1>Loading...</h1>
+            <div className={style.loader} />
           )}
         </div>
         {modalOpen && (
