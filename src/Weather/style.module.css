@@ -32,4 +32,8 @@
     background-color: black;
     color: white;
   }
+
+  .button:focus {
+    outline: none;
+  }
 }
