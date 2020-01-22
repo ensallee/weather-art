@@ -36,7 +36,7 @@ export default function Gallery(props) {
     const searchTerm = getSearchTerm(weather);
 
     fetch(
-      `https://collectionapi.metmuseum.org/public/collection/v1/search?q=${searchTerm}&medium=Paintings`
+      `https://collectionapi.metmuseum.org/public/collection/v1/search?medium=Paintings&q=${searchTerm}`
     )
       .then(resp => resp.json())
       .then(data => handleImageSelection(data.objectIDs));
