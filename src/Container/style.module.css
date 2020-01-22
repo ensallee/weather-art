@@ -17,6 +17,24 @@
   padding-top: 5px;
 }
 
+.loader {
+  border: 15px solid #f3f3f3;
+  border-top: 15px solid #557aa6;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media (min-width: 768px) {
   .innerContainer {
     flex-direction: row;
