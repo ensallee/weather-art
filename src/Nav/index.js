@@ -1,4 +1,5 @@
 import React from "react";
+import classnames from "classnames";
 import style from "./style.module.css";
 
 export default function Nav(props) {
@@ -12,7 +13,10 @@ export default function Nav(props) {
           <p>{locationString}</p>
           <p>{weather}</p>
         </div>
-        <button className={style.hideOnDesktop} onClick={toggleModal}>
+        <button
+          className={classnames(style.button, style.hideOnDesktop)}
+          onClick={toggleModal}
+        >
           Change Location
         </button>
       </div>

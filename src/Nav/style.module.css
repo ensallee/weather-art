@@ -9,16 +9,25 @@
 }
 
 .innerContainer {
-  margin-left: 15px;
+  margin: 0 8px;
+  width: 100%;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.innerContainer h3 {
+  font-family: "Oleo Script", cursive;
+  font-size: 20px;
+  margin: 0;
 }
 
 .detailsContainer {
-  margin-left: 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 125px;
+  margin: 0 auto 0 15px;
 }
 
 .detailsContainer p {
@@ -26,11 +35,33 @@
   margin: 2px;
 }
 
+.button {
+  cursor: pointer;
+  padding: 8px 4px;
+  margin: 3px;
+  background-color: white;
+  border-color: black;
+}
+
+.button:hover {
+  background-color: black;
+  color: white;
+}
+
+.button:focus {
+  outline: none;
+}
+
 .hideOnDesktop {
   display: block;
 }
 
 @media (min-width: 768px) {
+  .innerContainer h3 {
+    font-size: 35px;
+    margin: 0 15px;
+  }
+
   .detailsContainer {
     width: auto;
   }
